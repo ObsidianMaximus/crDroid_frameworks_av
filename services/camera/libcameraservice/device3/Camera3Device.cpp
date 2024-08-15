@@ -2460,7 +2460,7 @@ status_t Camera3Device::configureStreamsLocked(int operatingMode,
         return BAD_VALUE;
     }
 
-#ifdef CAMERA_PACKAGE_NAME
+#ifdef TAG_NAME
     sp<VendorTagDescriptor> vTags;
     sp<VendorTagDescriptorCache> vCache = VendorTagDescriptorCache::getGlobalVendorTagCache();
     if (vCache.get()) {
@@ -2469,8 +2469,8 @@ status_t Camera3Device::configureStreamsLocked(int operatingMode,
         sessionParams.unlock(metaBuffer);
         vCache->getVendorTagDescriptor(vendorId, &vTags);
         uint32_t tag;
-        if (CameraMetadata::getTagFromName(CAMERA_PACKAGE_NAME, vTags.get(), &tag)) {
-            ALOGE("%s: Unable to get %s tag", __FUNCTION__, CAMERA_PACKAGE_NAME);
+        if (CameraMetadata::getTagFromName(TAG_NAME, vTags.get(), &tag)) {
+            ALOGE("%s: Unable to get %s tag", __FUNCTION__, TAG_NAME);
         } else {
             std::string pkgName = CameraService::getCurrPackageName();
             status_t res = const_cast<CameraMetadata&>(sessionParams).update(tag, String8(pkgName.c_str()));
